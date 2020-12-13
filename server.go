@@ -22,12 +22,12 @@ func main() {
 	http.Handle("/resources/", http.StripPrefix("/resources/", fs))
 	fs = http.FileServer(http.Dir(publicPath))
 	http.Handle("/", fs)
-	http.HandleFunc("/api/date-diff", displayDayDifference)
+	http.HandleFunc("/api/date-diff", calculateDayDifference)
 	port := ":3030"
 	log.Fatal(http.ListenAndServe(port, nil))
 }
 
-func displayDayDifference(w http.ResponseWriter, r *http.Request) {
+func calculateDayDifference(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		w.Header().Set("Content-Type", "application/json")
 		reqBody, err := ioutil.ReadAll(r.Body)
